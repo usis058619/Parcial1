@@ -1,0 +1,180 @@
+<!DOCTYPE html><!-- Definicion de tipo de documento -->
+<html lang="en"><!-- Apertura de la pagina html -->
+<head><!-- Encabezado de la pagina html -->
+    <meta charset="UTF-8"><!-- Codificacion de Caracteres especiales  -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- IE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <title>PARCIAL 1</title>
+</head>
+<body><!-- Contenido de la pagina html -->
+    <div class="container" id="app">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="card border-primary">
+                    <div class="card-header bg-primary text-white">PARCIAL 1</div>
+                    <div class="card-body">
+                        <form id="frmau" @submit.prevent="guardarautorr" @reset.prevent="nuevoautorr()">
+                           
+                            </div>
+                            <div class="row p-1">
+                                <div class="col-3 ">IDAUTOR:</div>
+                                <div class="col-9 col-md-5">
+                                    <input class="form-control" type="text" v-model="autorr.idautor" name="txtIdAutorautorr" id="txtIdAutorautorr">
+                                </div>
+                            
+                                <div class="row p-1">
+                                    <div class="col-3 ">CODIGO:</div>
+                                    <div class="col-9 col-md-3">
+                                        <input class="form-control"  required type="text" v-model="autorr.codigo" name="txtCodigoautorr" id="txtCodigoautorr">
+                                    </div>
+
+                                
+
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-3 ">NOMBRE:</div>
+                                    <div class="col-9 col-md-6">
+                                        <input class="form-control" type="text" v-model="autorr.nombre" name="txtNombreautorr" id="txtNombreautor">
+                                    </div>
+
+                            
+                                
+
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-3 ">PAIS:</div>
+                                    <div class="col-9 col-md-6">
+                                        <input class="form-control" type="text" v-model="autorr.pais" name="txtPaisautorr" id="txtPaisAutorr">
+                                    </div>
+
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-3 ">
+                                        <label for="txtTelefonoAutor">TELEFONO:</label>
+                                    </div>
+                                    <div class="col-9 col-md-6">
+                                        <input required pattern="[0-9|-]{8}" v-model="autorr.telefono" type="text"
+                                            class="form-control" name="txtTelefonoAutorr" id="txtTelefonoAutorr">
+                                    </div>
+
+                                
+                                <div class="row p-1">
+                                    <div class="col col-md-6">
+                                        <input class="btn btn-success" type="submit" value="Guardar Datos">
+                                    </div>
+                                    <div class="col col-md-6">
+                                        <input class="btn btn-warning" type="reset" value="Nuevo Registro">
+                                    </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-12 col-md-">
+                <div class="card text-bg-light">
+                    <div class="card-header">CONSULTA DE AUTOR</div>
+                    <div class="card-body">
+                        <form>
+                            <table class="table table-dark table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>BUSCAR:</th>
+                                        <th colspan="2"><input type="text" @keyup="listarautores()" v-model="buscar" 
+                                            class="form-control" placeholder="Busar por nombre" ></th>
+                                    </tr>
+                                    <tr>
+                                        <th>IDAUTOR</th>
+                                        <th>CODIGO</th>
+                                        <th>NOMBRE</th>
+                                        <th>PAIS</th>
+                                        <th>TELEFONO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="autorr in autores" @click='modificarautor(autor)' :key="autorr.idautorr">
+                                        <td>{{autor.idautor}}</td>
+                                        <td>{{autor.codigo}}</td>
+                                        <td>{{autor.nombre}}</td>
+                                        <td>{{autor.pais}}</td>
+                                        <td>{{autor.telefono}}</td>
+                                        <td><button @click.prevent="eliminarautorr(autorr)" class="btn btn-danger">Eliminar</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    buscar: '',
+                    autores:[],
+                    accion : 'nuevo',
+                    autor:{
+                        idautorr:0,
+                        idautor:'',
+                        codigo:'',
+                        nombre: '',
+                        pais:'',
+                        telefono:'',
+                    }
+                }
+            },
+            methods:{
+                nuevoautor(){
+                    this.accion = 'nuevo';
+                    this.autorr.idautorr = '';
+                    this.autorr.idautor = '';
+                    this.autorr.nombre = '';
+                    this.autorr.codigo = '';
+                    this.autorr.nombre = '';
+                    this.autorr.pais= '';
+                    this.autorr.telefono= '';
+                },
+                modificarautor(autor){
+                    this.accion = 'modificar';
+                    this.autor = autor;
+                },
+                guardarautor(){
+                    this.listarautores();
+                    if( this.accion==='nuevo' ){
+                        this.autor.idautorr = new Date().getTime().toString(16);//las cantidad milisegundos y lo convierte en hexadecimal
+                        this.autores.push( JSON.parse(JSON.stringify(this.autor)) );
+                    }else if(this.accion==='modificar'){
+                        //hacer la busqueda y modificar el registro
+                        let index = this.autores.findIndex(autor=>autor.idautorr==this.autor.idautorr);
+                        this.autores[index] = JSON.parse(JSON.stringify(this.autor));
+                    }else if(this.accion==='eliminar'){
+                        let index = this.autores.findIndex(autor=>autor.idautorr==this.autor.idautorr);
+                        this.autores.splice(index, 1);
+                    }
+                    localStorage.setItem('autores', JSON.stringify(this.autores));
+                    this.nuevoautor();
+                },
+                eliminarautor(autor){
+                    if( confirm(`Esta seguro de eliminar el autor ${autorr.nombre}?`) ){
+                        this.accion="eliminar";
+                        this.autorr = autor;
+                        this.guardarautor();
+                    }
+                },
+                listarautores(){
+                    this.autores = JSON.parse( localStorage.getItem('autores') || "[]" )
+                        .filter(autor=>autor.nombre.toLowerCase().indexOf(this.buscar.toLowerCase())>-1);
+                }
+            },
+            created(){
+                this.listarautores();
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
