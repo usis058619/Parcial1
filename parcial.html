@@ -5,67 +5,58 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- IE -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
-    <title>PARCIAL 1</title>
+    <title>REGISTRO DE ALUMNOS</title>
 </head>
 <body><!-- Contenido de la pagina html -->
     <div class="container" id="app">
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="card border-primary">
-                    <div class="card-header bg-primary text-white">PARCIAL 1</div>
+                    <div class="card-header bg-primary text-white">REGISTRO DE ALUMNOS</div>
                     <div class="card-body">
-                        <form id="frmau" @submit.prevent="guardarautorr" @reset.prevent="nuevoautorr()">
-                           
-                            </div>
+                        
+                        <form id="frmautor" @submit.prevent="guardarautor" @reset.prevent="nuevoautor()">
                             <div class="row p-1">
                                 <div class="col-3 ">IDAUTOR:</div>
-                                <div class="col-9 col-md-5">
-                                    <input class="form-control" type="text" v-model="autorr.idautor" name="txtIdAutorautorr" id="txtIdAutorautorr">
+                                <div class="col-9 col-md-3">
+                                    <input class="form-control"  required type="text" v-model="autor.idautor" name="txtIdautorautor" id="txtIdautor">
                                 </div>
-                            
-                                <div class="row p-1">
-                                    <div class="col-3 ">CODIGO:</div>
-                                    <div class="col-9 col-md-3">
-                                        <input class="form-control"  required type="text" v-model="autorr.codigo" name="txtCodigoautorr" id="txtCodigoautorr">
-                                    </div>
 
-                                
-
+                            </div>
+                            <div class="row p-1">
+                                <div class="col-3 ">CODIGO:</div>
+                                <div class="col-9 col-md-6">
+                                    <input class="form-control" type="text" v-model="autor.codigo" name="txtCodigoautor" id="txtCodigoautor">
                                 </div>
-                                <div class="row p-1">
-                                    <div class="col-3 ">NOMBRE:</div>
-                                    <div class="col-9 col-md-6">
-                                        <input class="form-control" type="text" v-model="autorr.nombre" name="txtNombreautorr" id="txtNombreautor">
-                                    </div>
 
-                            
-                                
-
+                            </div>
+                            <div class="row p-1">
+                                <div class="col-3 ">NOMBRE:</div>
+                                <div class="col-9 col-md-6">
+                                    <input class="form-control" type="text" v-model="autor.nombre" name="txtNombreautor" id="txtNombreautor">
                                 </div>
-                                <div class="row p-1">
-                                    <div class="col-3 ">PAIS:</div>
-                                    <div class="col-9 col-md-6">
-                                        <input class="form-control" type="text" v-model="autorr.pais" name="txtPaisautorr" id="txtPaisAutorr">
-                                    </div>
 
+                            </div>
+                            <div class="row p-1">
+                                <div class="col-3 ">PAIS:</div>
+                                <div class="col-9 col-md-6">
+                                    <input class="form-control" type="text" v-model="autor.pais" name="txtPaisautor" id="txtPaisautor">
                                 </div>
-                                <div class="row p-1">
-                                    <div class="col-3 ">
-                                        <label for="txtTelefonoAutor">TELEFONO:</label>
-                                    </div>
-                                    <div class="col-9 col-md-6">
-                                        <input required pattern="[0-9|-]{8}" v-model="autorr.telefono" type="text"
-                                            class="form-control" name="txtTelefonoAutorr" id="txtTelefonoAutorr">
-                                    </div>
 
-                                
-                                <div class="row p-1">
-                                    <div class="col col-md-6">
-                                        <input class="btn btn-success" type="submit" value="Guardar Datos">
-                                    </div>
-                                    <div class="col col-md-6">
-                                        <input class="btn btn-warning" type="reset" value="Nuevo Registro">
-                                    </div>
+                            </div>
+                            <div class="row p-1">
+                                <div class="col-3 ">
+                                    <label for="txtTelefonoAlumno">TELEFONO:</label>
+                                </div>
+                                <div class="col-9 col-md-6">
+                                    <input required pattern="[0-9|-]{8}" v-model="autor.telefono" type="text"
+                                        class="form-control" name="txtTelefonoAlumno" id="txtTelefonoAlumno">
+                                </div>
+
+                            <div class="row p-1">
+                                <div class="col col-md-6">
+                                    <input class="btn btn-success" type="submit" value="Guardar Datos">
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -73,7 +64,7 @@
             </div>
             <div class=" col-12 col-md-">
                 <div class="card text-bg-light">
-                    <div class="card-header">CONSULTA DE AUTOR</div>
+                    <div class="card-header">CONSULTA DE ALUMNOS</div>
                     <div class="card-body">
                         <form>
                             <table class="table table-dark table-hover">
@@ -89,16 +80,17 @@
                                         <th>NOMBRE</th>
                                         <th>PAIS</th>
                                         <th>TELEFONO</th>
+                                        <th>ACCIONES</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="autorr in autores" @click='modificarautor(autor)' :key="autorr.idautorr">
+                                    <tr v-for="autor in autores" @click='modificarautor(autor)' :key="autor.idautor">
                                         <td>{{autor.idautor}}</td>
                                         <td>{{autor.codigo}}</td>
                                         <td>{{autor.nombre}}</td>
                                         <td>{{autor.pais}}</td>
                                         <td>{{autor.telefono}}</td>
-                                        <td><button @click.prevent="eliminarautorr(autorr)" class="btn btn-danger">Eliminar</button></td>
+                                        <td><button @click.prevent="eliminarautor(autor)" class="btn btn-danger">Eliminar</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -108,6 +100,14 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+          let formulario = document.getElementById('frmautor');
+          formulario.addEventListener('submit', function() {
+            formulario.reset();
+          });
+        });
+      </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
@@ -119,7 +119,7 @@
                     autores:[],
                     accion : 'nuevo',
                     autor:{
-                        idautorr:0,
+                        // idautor:0,
                         idautor:'',
                         codigo:'',
                         nombre: '',
@@ -131,13 +131,12 @@
             methods:{
                 nuevoautor(){
                     this.accion = 'nuevo';
-                    this.autorr.idautorr = '';
-                    this.autorr.idautor = '';
-                    this.autorr.nombre = '';
-                    this.autorr.codigo = '';
-                    this.autorr.nombre = '';
-                    this.autorr.pais= '';
-                    this.autorr.telefono= '';
+                    this.autor.idautor = '';
+                    this.autor.idautor = '';
+                    this.autor.codigo = '';
+                    this.autor.nombre = '';
+                    this.autor.pais = '';
+                    this.autor.telefono= '';
                 },
                 modificarautor(autor){
                     this.accion = 'modificar';
@@ -146,29 +145,30 @@
                 guardarautor(){
                     this.listarautores();
                     if( this.accion==='nuevo' ){
-                        this.autor.idautorr = new Date().getTime().toString(16);//las cantidad milisegundos y lo convierte en hexadecimal
+                        this.autor.idautor= new Date().getTime().toString(16);//las cantidad milisegundos y lo convierte en hexadecimal
                         this.autores.push( JSON.parse(JSON.stringify(this.autor)) );
                     }else if(this.accion==='modificar'){
                         //hacer la busqueda y modificar el registro
-                        let index = this.autores.findIndex(autor=>autor.idautorr==this.autor.idautorr);
+                        let index = this.autores.findIndex(autor=>autor.idautor==this.autor.idautor);
                         this.autores[index] = JSON.parse(JSON.stringify(this.autor));
                     }else if(this.accion==='eliminar'){
-                        let index = this.autores.findIndex(autor=>autor.idautorr==this.autor.idautorr);
+                        let index = this.autores.findIndex(autor=>autor.idautor==this.autor.idautor);
                         this.autores.splice(index, 1);
                     }
                     localStorage.setItem('autores', JSON.stringify(this.autores));
                     this.nuevoautor();
                 },
                 eliminarautor(autor){
-                    if( confirm(`Esta seguro de eliminar el autor ${autorr.nombre}?`) ){
+                    if( confirm(`Esta seguro de eliminar el autor ${autor.nombre}?`) ){
                         this.accion="eliminar";
-                        this.autorr = autor;
+                        this.autor = autor;
                         this.guardarautor();
                     }
                 },
                 listarautores(){
                     this.autores = JSON.parse( localStorage.getItem('autores') || "[]" )
-                        .filter(autor=>autor.nombre.toLowerCase().indexOf(this.buscar.toLowerCase())>-1);
+                        .filter(autor=>autor.codigo.toLowerCase().indexOf(this.buscar.toLowerCase())>-1 || 
+                        autor.nombre.indexOf(this.buscar)>-1);
                 }
             },
             created(){
